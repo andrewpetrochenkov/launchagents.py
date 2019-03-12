@@ -1,5 +1,4 @@
 #!/usr/bin/env python
 import launchagents
 
-files = launchagents.files()
-print(files)
+print("\n".join(launchagents.files()))

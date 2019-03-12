@@ -1,1 +1,0 @@
-( set -x; python -m launchagents.create )
