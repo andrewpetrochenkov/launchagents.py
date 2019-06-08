@@ -1,5 +1,6 @@
 <!--
 https://pypi.org/project/readme-generator/
+https://pypi.org/project/python-readme-generator/
 -->
 
 [![](https://img.shields.io/badge/OS-MacOS-blue.svg?longCache=True)]()
@@ -30,5 +31,5 @@ function|`__doc__`
 +   [launchd.plist(5) Mac OS](https://www.real-world-systems.com/docs/launchd.plist.5.html)
 
 <p align="center">
-    <a href="https://pypi.org/project/readme-generator/">readme-generator</a>
+    <a href="https://pypi.org/project/python-readme-generator/">python-readme-generator</a>
 </p>
