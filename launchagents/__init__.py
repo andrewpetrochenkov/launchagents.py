@@ -1,15 +1,15 @@
-#!/usr/bin/env python
+__all__ = ['files', 'jobs', 'load', 'read', 'write', 'unload', 'update']
+
+
 import launchctl
 import os
 import plistlib
-import public
 import subprocess
 import sys
 
 MAC = "darwin" in sys.platform.lower()
 
 
-@public.add
 def read(path):
     """return a dictionary with a plist file data"""
     if hasattr(plistlib, "load"):
@@ -17,7 +17,6 @@ def read(path):
     return plistlib.readPlist(path)
 
 
-@public.add
 def write(path, data):
     """write a dictionary to a plist file"""
     path = os.path.abspath(os.path.expanduser(path))
@@ -30,7 +29,6 @@ def write(path, data):
         plistlib.writePlist(data, path)
 
 
-@public.add
 def update(path, **kwargs):
     """update a plist file"""
     new = {}
@@ -41,14 +39,12 @@ def update(path, **kwargs):
     write(path, new)
 
 
-@public.add
 def jobs():
     """return a list of launchctl jobs for `~/Library/LaunchAgents/*.plist` only"""
     labels = list(map(lambda f: read(f).get("Label", None), files()))
     return list(filter(lambda j: j.label in labels, launchctl.jobs()))
 
 
-@public.add
 def files():
     """return a list of `~/Library/LaunchAgents/*.plist` files"""
     path = os.path.expanduser("~/Library/LaunchAgents")
@@ -56,19 +52,18 @@ def files():
         return []
     result = []
     for root, dirs, files in os.walk(path):
-        plistfiles = list(filter(lambda f: os.path.splitext(f)[1] == ".plist", files))
+        plistfiles = list(
+            filter(lambda f: os.path.splitext(f)[1] == ".plist", files))
         result += list(map(lambda f: os.path.join(root, f), plistfiles))
     return result
 
 
-@public.add
 def load():
     """load `~/Library/LaunchAgents/*.plist`"""
     args = ["launchctl", "load"] + files()
     subprocess.check_call(args)
 
 
-@public.add
 def unload():
     """unload `~/Library/LaunchAgents/*.plist`"""
     args = ["launchctl", "unload"] + files()
